@@ -1,20 +1,27 @@
-# Duduță Denis-Florin — Portfolio
+# Denis-Florin Duduță — Portfolio
 
-Static portfolio ready for GitHub Pages. No installation or build step required.
+Personal portfolio focused on cybersecurity, SOC / Blue Team, software development and academic projects.
 
-Upload the contents of this folder to the repository root, so `index.html` is at the first level. Preserve the `assets` folder and the exact filenames.
+## About
 
-## Files
+Master's student in Cyber Security and Machine Learning at Ovidius University, interested in SOC operations, incident analysis, network security and vulnerability assessment.
 
-- `index.html`: site content and links
-- `style.css`: responsive layout and visual effects
-- `script.js`: navigation highlighting and accessible entrance animations
-- `cv.pdf`: downloadable CV
-- `favicon.svg`: browser icon
-- `assets/photo.jpg`: portrait
+## Portfolio
 
-This export includes the card layout, the simplified introduction, the training-profile links, the phone/WhatsApp contact preference, and the corrected LinkedIn URL.
+The website includes:
 
-The supplied CyLab Academy `/profile` link is retained; public access has not been confirmed. Replace it with a public sharing URL if available.
+- Cybersecurity experience
+- TryHackMe SOC Level 1 training
+- Software projects
+- Competitions and cybersecurity events
+- Technical skills
+- Certifications
+- CV and contact information
 
-After publishing, replace the relative `assets/photo.jpg` values in the Open Graph and Twitter image metadata with the full public image URL.
+## Technologies
+
+HTML, CSS and JavaScript.
+
+## Live Website
+
+https://denisflorin1202.github.io
