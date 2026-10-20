@@ -1,695 +1,89 @@
-:root {
-  --bg: #0D1520;
-  --panel: #141F2B;
-  --panel-2: #101A24;
-  --border: #223140;
-  --text: #E7EDF2;
-  --muted: #8B99A6;
-  --accent: #57A6C9;
-  --accent-dim: #3C7188;
-  --amber: #D89B4A;
-  --logo-bg: #EEF2F6;
-
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'IBM Plex Sans', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
-
-  --sidebar-w: 300px;
-}
-
-* { box-sizing: border-box; }
-
-html {
-  scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-}
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-
-a { color: inherit; }
-
-.wrap {
-  display: flex;
-  align-items: flex-start;
-  max-width: 1180px;
-  margin: 0 auto;
-}
-
-/* ---------- Sidebar ---------- */
-
-.sidebar {
-  width: var(--sidebar-w);
-  flex-shrink: 0;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 48px 32px;
-  border-right: 1px solid var(--border);
-}
-
-.identity {
-  animation: rise 0.7s ease-out both;
-}
-
-.portrait-frame {
-  width: 108px;
-  height: 108px;
-  border-radius: 6px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  position: relative;
-}
-
-.portrait-frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-bottom: 3px solid var(--accent);
-}
-
-.portrait {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  display: block;
-  filter: grayscale(15%);
-}
-
-.identity h1 {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 1.2;
-  margin: 20px 0 6px;
-  letter-spacing: -0.01em;
-}
-
-.role {
-  margin: 0 0 4px;
-  font-size: 0.95rem;
-  color: var(--text);
-  font-weight: 500;
-}
-
-.program {
-  margin: 0;
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-
-.sidenav {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin: 40px 0;
-}
-
-.nav-link {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 0;
-  text-decoration: none;
-  font-size: 0.9rem;
-  color: var(--muted);
-  transition: color 0.15s ease;
-}
-
-.nav-link .dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--border);
-  transition: background 0.15s ease, box-shadow 0.15s ease;
-  flex-shrink: 0;
-}
-
-.nav-link:hover {
-  color: var(--text);
-}
-
-.nav-link.active {
-  color: var(--text);
-}
-
-.nav-link.active .dot {
-  background: var(--accent);
-  box-shadow: 0 0 0 3px rgba(87, 166, 201, 0.18);
-}
-
-.contact-block {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-}
-
-.contact-block a {
-  text-decoration: none;
-  color: var(--muted);
-  transition: color 0.15s ease;
-  word-break: break-all;
-}
-
-.contact-block a:hover {
-  color: var(--accent);
-}
-
-.location {
-  margin: 6px 0 0;
-  color: var(--border);
-}
-
-@keyframes rise {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ---------- Main log ---------- */
-
-.log {
-  flex: 1;
-  min-width: 0;
-  padding: 64px 48px 120px;
-}
-
-.panel {
-  padding-top: 12px;
-  padding-bottom: 56px;
-  border-bottom: 1px solid var(--border);
-  scroll-margin-top: 32px;
-}
-
-.panel:last-of-type {
-  border-bottom: none;
-}
-
-.panel > h2 {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin: 0 0 28px;
-  letter-spacing: -0.01em;
-}
-
-.panel > h2.subheading {
-  font-size: 1.1rem;
-  margin-top: 44px;
-  margin-bottom: 22px;
-  color: var(--muted);
-}
-
-.hero-entry {
-  padding-top: 8px;
-  padding-bottom: 64px;
-}
-
-.kicker {
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  color: var(--accent);
-  margin: 0 0 18px;
-}
-
-.hero-entry h2 {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
-  font-weight: 600;
-  line-height: 1.2;
-  max-width: 14ch;
-  margin: 0 0 22px;
-  letter-spacing: -0.01em;
-}
-
-.lede {
-  max-width: 62ch;
-  color: var(--muted);
-  font-size: 1.02rem;
-  margin: 0;
-}
-
-/* Log entries */
-
-.log-entry {
-  margin-bottom: 32px;
-}
-
-.log-entry:last-child {
-  margin-bottom: 0;
-}
-
-.entry-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-
-.status-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.status-dot.done { background: var(--accent-dim); }
-.status-dot.live {
-  background: var(--amber);
-  box-shadow: 0 0 0 3px rgba(216, 155, 74, 0.18);
-  animation: pulse 2.6s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(216, 155, 74, 0.18); }
-  50% { box-shadow: 0 0 0 5px rgba(216, 155, 74, 0.08); }
-}
-
-.timestamp {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--muted);
-}
-
-.log-entry h3 {
-  font-family: var(--font-display);
-  font-size: 1.08rem;
-  font-weight: 600;
-  margin: 0 0 4px;
-}
-
-.log-entry .org {
-  margin: 0 0 12px;
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-
-.log-entry ul {
-  margin: 0;
-  padding-left: 18px;
-  max-width: 68ch;
-}
-
-.log-entry li {
-  margin-bottom: 8px;
-  color: var(--text);
-  font-size: 0.95rem;
-}
-
-.log-entry li:last-child {
-  margin-bottom: 0;
-}
-
-/* Skills */
-
-.skill-group {
-  margin-bottom: 26px;
-}
-
-.skill-group:last-child {
-  margin-bottom: 0;
-}
-
-.skill-group h3 {
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--muted);
-  margin: 0 0 12px;
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.tags span {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  padding: 5px 10px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  color: var(--text);
-  background: var(--panel);
-}
-
-/* Contact panel */
-
-.contact-panel {
-  padding-bottom: 80px;
-}
-
-.contact-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  margin-top: 28px;
-  max-width: 640px;
-}
-
-.contact-card {
-  background: var(--panel);
-  padding: 20px;
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  transition: background 0.15s ease;
-}
-
-.contact-card:hover {
-  background: var(--panel-2);
-}
-
-.contact-card .label {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--muted);
-}
-
-.contact-card .value {
-  font-size: 0.85rem;
-  word-break: break-word;
-  color: var(--text);
-}
-
-.footer-note {
-  margin-top: 28px;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--border);
-}
-
-/* ---------- Responsive ---------- */
-
-@media (max-width: 860px) {
-  .wrap {
-    flex-direction: column;
-  }
-
-  .sidebar {
-    position: relative;
-    width: 100%;
-    height: auto;
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding: 32px 24px;
-    gap: 24px;
-  }
-
-  .identity {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .identity h1 { margin: 0 0 4px; font-size: 1.2rem; }
-  .portrait-frame { width: 64px; height: 64px; }
-
-  .sidenav {
-    display: none;
-  }
-
-  .contact-block {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-left: auto;
-  }
-
-  .location { display: none; }
-
-  .log {
-    padding: 40px 24px 80px;
-  }
-
-  .contact-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-block {
-    margin-left: 0;
-  }
-}
-
-/* ---------- Motion ---------- */
-
-/* Scroll progress bar */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--amber));
-  transform: scaleX(0);
-  transform-origin: left;
-  z-index: 100;
-  pointer-events: none;
-}
-
-/* Scroll reveal (only active when JS adds the "js" class) */
-.js .reveal {
-  opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.6s ease-out var(--d, 0ms), transform 0.6s ease-out var(--d, 0ms);
-}
-
-.js .reveal.in {
-  opacity: 1;
-  transform: none;
-}
-
-/* Skill tags pop in after their group is revealed */
-.js .skill-group .tags span {
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.4s ease-out var(--t, 0ms), transform 0.4s ease-out var(--t, 0ms),
-              border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
-}
-
-.js .skill-group.in .tags span {
-  opacity: 1;
-  transform: none;
-}
-
-/* Hover: tags */
-.tags span {
-  cursor: default;
-}
-
-.skill-group.in .tags span:hover,
-.tags span:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--panel-2);
-  transform: translateY(-2px);
-  transition-delay: 0ms;
-}
-
-/* Hover: log entries get an accent rail on the left */
-.log-entry {
-  position: relative;
-}
-
-.log-entry::before {
-  content: "";
-  position: absolute;
-  left: -20px;
-  top: 4px;
-  bottom: 4px;
-  width: 2px;
-  background: var(--accent);
-  border-radius: 2px;
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 0.3s ease;
-}
-
-.log-entry:hover::before {
-  transform: scaleY(1);
-}
-
-.log-entry h3 {
-  transition: color 0.2s ease;
-}
-
-.log-entry:hover h3 {
-  color: var(--accent);
-}
-
-/* Hover: sidebar nav */
-.nav-link {
-  transition: color 0.15s ease, transform 0.2s ease;
-}
-
-.nav-link:hover {
-  transform: translateX(4px);
-}
-
-.nav-link:hover .dot {
-  background: var(--accent-dim);
-  transform: scale(1.4);
-}
-
-.nav-link .dot {
-  transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.2s ease;
-}
-
-/* Hover: portrait */
-.portrait-frame {
-  transition: border-color 0.25s ease, transform 0.25s ease;
-}
-
-.portrait {
-  transition: filter 0.3s ease, transform 0.4s ease;
-}
-
-.portrait-frame:hover {
-  border-color: var(--accent-dim);
-}
-
-.portrait-frame:hover .portrait {
-  filter: grayscale(0%);
-  transform: scale(1.05);
-}
-
-/* Hover: contact cards */
-.contact-card {
-  position: relative;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.contact-card::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 2px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s ease;
-}
-
-.contact-card:hover {
-  transform: translateY(-3px);
-}
-
-.contact-card:hover::after {
-  transform: scaleX(1);
-}
-
-/* Hover: sidebar contact links */
-.contact-block a {
-  display: inline-block;
-}
-
-.contact-block a:hover {
-  transform: translateX(3px);
-}
-
-.contact-block a {
-  transition: color 0.15s ease, transform 0.2s ease;
-}
-
-/* Certifications */
-.cert-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
-}
-
-.cert {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  min-width: 0;
-}
-
-.js .cert.reveal {
-  transition: opacity 0.6s ease-out var(--d, 0ms), transform 0.6s ease-out var(--d, 0ms),
-              border-color 0.2s ease, background 0.2s ease;
-}
-
-.cert:hover {
-  border-color: var(--accent-dim);
-  background: var(--panel-2);
-}
-
-.cert-logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 64px;
-  flex-shrink: 0;
-  padding: 6px;
-  background: var(--logo-bg);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  transition: border-color 0.2s ease;
-}
-
-.cert-logo img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-.cert:hover .cert-logo { border-color: var(--accent-dim); }
-
-.cert-text { min-width: 0; }
-
-.cert-text .entry-meta { margin-bottom: 4px; }
-
-.cert-text h3 {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.3;
-  margin: 4px 0 2px;
-}
-
-.cert-text .org {
-  margin: 0;
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-
-/* Focus visibility */
-
-a:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
+// Highlights the sidebar nav link matching the section currently in view.
+const sections = document.querySelectorAll('main.log > section[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+
+const setActive = (id) => {
+  navLinks.forEach((link) => {
+    link.classList.toggle('active', link.dataset.section === id);
+  });
+};
+
+if ('IntersectionObserver' in window && sections.length) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        }
+      });
+    },
+    { rootMargin: '-20% 0px -70% 0px', threshold: 0 }
+  );
+
+  sections.forEach((section) => observer.observe(section));
+} else if (navLinks.length) {
+  navLinks[0].classList.add('active');
+}
+
+// ---------- Scroll reveal ----------
+// Elements fade and slide in once, the first time they enter the viewport.
+// The "js" class is added only when JS runs, so the page stays fully visible without it.
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if ('IntersectionObserver' in window && !reduceMotion) {
+  document.documentElement.classList.add('js');
+
+  const targets = document.querySelectorAll(
+    '.panel > h2, .hero-entry > *, .log-entry, .cert, .skill-group, .contact-grid, .footer-note'
+  );
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+  );
+
+  targets.forEach((el, i) => {
+    el.classList.add('reveal');
+    // Small stagger for siblings that appear together (hero lines, skill groups).
+    el.style.setProperty('--d', `${(i % 4) * 70}ms`);
+    revealObserver.observe(el);
+  });
+
+  // Staggered fade-in for the skill tags inside a group once it is revealed.
+  document.querySelectorAll('.skill-group .tags span').forEach((tag, i) => {
+    tag.style.setProperty('--t', `${(i % 8) * 45}ms`);
+  });
+}
+
+// ---------- Scroll progress bar ----------
+const bar = document.createElement('div');
+bar.className = 'scroll-progress';
+bar.setAttribute('aria-hidden', 'true');
+document.body.appendChild(bar);
+
+let ticking = false;
+const updateProgress = () => {
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const ratio = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+  bar.style.transform = `scaleX(${ratio})`;
+  ticking = false;
+};
+
+window.addEventListener(
+  'scroll',
+  () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateProgress);
+      ticking = true;
+    }
+  },
+  { passive: true }
+);
+updateProgress();
