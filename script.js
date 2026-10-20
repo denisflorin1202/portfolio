@@ -1,80 +1,89 @@
-// Keep section links and anchor spacing aligned with the responsive top bar.
-const header = document.querySelector('.site-header');
-const sections = [...document.querySelectorAll('main.log > section[id]')];
+// Highlights the sidebar nav link matching the section currently in view.
+const sections = document.querySelectorAll('main.log > section[id]');
 const navLinks = document.querySelectorAll('.nav-link');
-let headerHeight = 0;
-let scheduled = false;
 
-function updateNavigation() {
-  scheduled = false;
-  header.classList.toggle('scrolled', window.scrollY > 24);
-  const marker = headerHeight + 48;
-  let current = sections[0]?.id;
-  for (const section of sections) {
-    if (section.getBoundingClientRect().top <= marker) current = section.id;
-  }
-  if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) {
-    current = sections.at(-1)?.id;
-  }
+const setActive = (id) => {
   navLinks.forEach((link) => {
-    const active = link.dataset.section === current;
-    link.classList.toggle('active', active);
-    if (active) link.setAttribute('aria-current', 'location');
-    else link.removeAttribute('aria-current');
+    link.classList.toggle('active', link.dataset.section === id);
   });
-}
-function measureHeader() {
-  headerHeight = Math.ceil(header.getBoundingClientRect().height);
-  document.documentElement.style.setProperty('--header-height', `${headerHeight}px`);
-  updateNavigation();
-}
-window.addEventListener('scroll', () => {
-  if (!scheduled) {
-    scheduled = true;
-    requestAnimationFrame(updateNavigation);
-  }
-}, { passive: true });
-window.addEventListener('resize', measureHeader);
-window.addEventListener('load', measureHeader);
-if ('ResizeObserver' in window) new ResizeObserver(measureHeader).observe(header);
-measureHeader();
+};
 
-// Animate visible content once, without hiding content before JS is available.
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-const entranceAnimations = new Map();
-if ('IntersectionObserver' in window && 'animate' in Element.prototype) {
-  const revealObserver = new IntersectionObserver((entries) => {
-    let order = 0;
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      revealObserver.unobserve(entry.target);
-      if (reducedMotion.matches || entry.target.contains(document.activeElement)) return;
-      const animation = entry.target.animate([
-        { opacity: 0, transform: 'translateY(16px)' },
-        { opacity: 1, transform: 'translateY(0)' },
-      ], {
-        duration: 600,
-        delay: Math.min(order++, 3) * 70,
-        easing: 'cubic-bezier(0.2, 0.7, 0.3, 1)',
-        fill: 'backwards',
+if ('IntersectionObserver' in window && sections.length) {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        }
       });
-      entranceAnimations.set(entry.target, animation);
-      animation.onfinish = animation.oncancel = () => entranceAnimations.delete(entry.target);
-    });
-  }, { threshold: 0, rootMargin: '0px 0px -24px 0px' });
+    },
+    { rootMargin: '-20% 0px -70% 0px', threshold: 0 }
+  );
 
-  document.querySelectorAll(
-    '.hero-entry > .identity, .panel > h2, .panel > .kicker, .panel > .lede, ' +
-    '.log-entry, .skill-group, .training-profiles, .contact-grid, .download-section, .footer-note'
-  ).forEach((element) => revealObserver.observe(element));
+  sections.forEach((section) => observer.observe(section));
+} else if (navLinks.length) {
+  navLinks[0].classList.add('active');
 }
 
-// Keyboard navigation and changes to the motion preference take effect immediately.
-document.addEventListener('focusin', (event) => {
-  entranceAnimations.forEach((animation, element) => {
-    if (element.contains(event.target)) animation.cancel();
+// ---------- Scroll reveal ----------
+// Elements fade and slide in once, the first time they enter the viewport.
+// The "js" class is added only when JS runs, so the page stays fully visible without it.
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if ('IntersectionObserver' in window && !reduceMotion) {
+  document.documentElement.classList.add('js');
+
+  const targets = document.querySelectorAll(
+    '.panel > h2, .hero-entry > *, .log-entry, .cert, .skill-group, .contact-grid, .footer-note'
+  );
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+  );
+
+  targets.forEach((el, i) => {
+    el.classList.add('reveal');
+    // Small stagger for siblings that appear together (hero lines, skill groups).
+    el.style.setProperty('--d', `${(i % 4) * 70}ms`);
+    revealObserver.observe(el);
   });
-});
-reducedMotion.addEventListener('change', () => {
-  if (reducedMotion.matches) entranceAnimations.forEach((animation) => animation.cancel());
-});
+
+  // Staggered fade-in for the skill tags inside a group once it is revealed.
+  document.querySelectorAll('.skill-group .tags span').forEach((tag, i) => {
+    tag.style.setProperty('--t', `${(i % 8) * 45}ms`);
+  });
+}
+
+// ---------- Scroll progress bar ----------
+const bar = document.createElement('div');
+bar.className = 'scroll-progress';
+bar.setAttribute('aria-hidden', 'true');
+document.body.appendChild(bar);
+
+let ticking = false;
+const updateProgress = () => {
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  const ratio = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+  bar.style.transform = `scaleX(${ratio})`;
+  ticking = false;
+};
+
+window.addEventListener(
+  'scroll',
+  () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateProgress);
+      ticking = true;
+    }
+  },
+  { passive: true }
+);
+updateProgress();
