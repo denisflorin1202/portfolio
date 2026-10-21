@@ -1,4 +1,3 @@
-// Highlights the sidebar nav link matching the section currently in view.
 const sections = document.querySelectorAll('main.log > section[id]');
 const navLinks = document.querySelectorAll('.nav-link');
 
@@ -25,9 +24,6 @@ if ('IntersectionObserver' in window && sections.length) {
   navLinks[0].classList.add('active');
 }
 
-// ---------- Scroll reveal ----------
-// Elements fade and slide in once, the first time they enter the viewport.
-// The "js" class is added only when JS runs, so the page stays fully visible without it.
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 if ('IntersectionObserver' in window && !reduceMotion) {
@@ -51,18 +47,15 @@ if ('IntersectionObserver' in window && !reduceMotion) {
 
   targets.forEach((el, i) => {
     el.classList.add('reveal');
-    // Small stagger for siblings that appear together (hero lines, skill groups).
     el.style.setProperty('--d', `${(i % 4) * 70}ms`);
     revealObserver.observe(el);
   });
 
-  // Staggered fade-in for the skill tags inside a group once it is revealed.
   document.querySelectorAll('.skill-group .tags span').forEach((tag, i) => {
     tag.style.setProperty('--t', `${(i % 8) * 45}ms`);
   });
 }
 
-// ---------- Scroll progress bar ----------
 const bar = document.createElement('div');
 bar.className = 'scroll-progress';
 bar.setAttribute('aria-hidden', 'true');
