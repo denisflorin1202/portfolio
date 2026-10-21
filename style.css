@@ -47,7 +47,6 @@ a { color: inherit; }
   margin: 0 auto;
 }
 
-/* ---------- Sidebar ---------- */
 
 .sidebar {
   width: var(--sidebar-w);
@@ -58,8 +57,7 @@ a { color: inherit; }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 48px 32px;
-  border-right: 1px solid var(--border);
+  padding: 72px 32px 48px;
 }
 
 .identity {
@@ -67,8 +65,9 @@ a { color: inherit; }
 }
 
 .portrait-frame {
-  width: 108px;
-  height: 108px;
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 4 / 5;
   border-radius: 6px;
   overflow: hidden;
   border: 1px solid var(--border);
@@ -182,7 +181,6 @@ a { color: inherit; }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ---------- Main log ---------- */
 
 .log {
   flex: 1;
@@ -228,6 +226,25 @@ a { color: inherit; }
   margin: 0 0 18px;
 }
 
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1.05;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+
+.hero-entry .role {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.hero-entry .program {
+  margin: 0 0 22px;
+}
+
 .hero-entry h2 {
   font-family: var(--font-display);
   font-size: clamp(1.8rem, 3.4vw, 2.6rem);
@@ -245,7 +262,6 @@ a { color: inherit; }
   margin: 0;
 }
 
-/* Log entries */
 
 .log-entry {
   margin-bottom: 32px;
@@ -316,7 +332,6 @@ a { color: inherit; }
   margin-bottom: 0;
 }
 
-/* Skills */
 
 .skill-group {
   margin-bottom: 26px;
@@ -350,7 +365,6 @@ a { color: inherit; }
   background: var(--panel);
 }
 
-/* Contact panel */
 
 .contact-panel {
   padding-bottom: 80px;
@@ -358,12 +372,12 @@ a { color: inherit; }
 
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
   margin-top: 28px;
-  max-width: 640px;
+  max-width: 900px;
 }
 
 .contact-card {
@@ -399,7 +413,6 @@ a { color: inherit; }
   color: var(--border);
 }
 
-/* ---------- Responsive ---------- */
 
 @media (max-width: 860px) {
   .wrap {
@@ -426,7 +439,7 @@ a { color: inherit; }
   }
 
   .identity h1 { margin: 0 0 4px; font-size: 1.2rem; }
-  .portrait-frame { width: 64px; height: 64px; }
+  .portrait-frame { width: 72px; aspect-ratio: 1 / 1; }
 
   .sidenav {
     display: none;
@@ -456,9 +469,7 @@ a { color: inherit; }
   }
 }
 
-/* ---------- Motion ---------- */
 
-/* Scroll progress bar */
 .scroll-progress {
   position: fixed;
   top: 0;
@@ -472,7 +483,6 @@ a { color: inherit; }
   pointer-events: none;
 }
 
-/* Scroll reveal (only active when JS adds the "js" class) */
 .js .reveal {
   opacity: 0;
   transform: translateY(22px);
@@ -484,7 +494,6 @@ a { color: inherit; }
   transform: none;
 }
 
-/* Skill tags pop in after their group is revealed */
 .js .skill-group .tags span {
   opacity: 0;
   transform: translateY(8px);
@@ -497,7 +506,6 @@ a { color: inherit; }
   transform: none;
 }
 
-/* Hover: tags */
 .tags span {
   cursor: default;
 }
@@ -511,7 +519,6 @@ a { color: inherit; }
   transition-delay: 0ms;
 }
 
-/* Hover: log entries get an accent rail on the left */
 .log-entry {
   position: relative;
 }
@@ -542,7 +549,6 @@ a { color: inherit; }
   color: var(--accent);
 }
 
-/* Hover: sidebar nav */
 .nav-link {
   transition: color 0.15s ease, transform 0.2s ease;
 }
@@ -560,7 +566,6 @@ a { color: inherit; }
   transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.2s ease;
 }
 
-/* Hover: portrait */
 .portrait-frame {
   transition: border-color 0.25s ease, transform 0.25s ease;
 }
@@ -578,7 +583,6 @@ a { color: inherit; }
   transform: scale(1.05);
 }
 
-/* Hover: contact cards */
 .contact-card {
   position: relative;
   transition: background 0.2s ease, transform 0.2s ease;
@@ -605,7 +609,6 @@ a { color: inherit; }
   transform: scaleX(1);
 }
 
-/* Hover: sidebar contact links */
 .contact-block a {
   display: inline-block;
 }
@@ -618,7 +621,6 @@ a { color: inherit; }
   transition: color 0.15s ease, transform 0.2s ease;
 }
 
-/* Certifications */
 .cert-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -687,9 +689,85 @@ a { color: inherit; }
   color: var(--muted);
 }
 
-/* Focus visibility */
 
 a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
+}
+
+.log-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 24px;
+  align-items: baseline;
+}
+
+.log-entry > * { grid-column: 1 / -1; }
+
+.log-entry > h3 { grid-column: 1; grid-row: 1; }
+
+.log-entry > .entry-meta {
+  grid-column: 2;
+  grid-row: 1;
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .log-entry { display: block; }
+  .log-entry > .entry-meta { margin-bottom: 8px; }
+}
+
+
+.hero-entry .lede {
+  max-width: none;
+  color: #B4C0CB;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+
+
+.contact-card.cv {
+  background: linear-gradient(180deg, rgba(87, 166, 201, 0.12), rgba(87, 166, 201, 0.04)), var(--panel);
+}
+
+.contact-card.cv .label,
+.contact-card.cv .value {
+  color: var(--accent);
+}
+
+.contact-card.cv .value {
+  font-weight: 600;
+}
+
+.contact-card .arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.contact-card.cv:hover .arrow {
+  transform: translateY(3px);
+}
+
+.contact-card {
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-card:hover {
+  transform: none;
+  background: var(--panel-2);
+  box-shadow: inset 0 0 0 1px var(--accent-dim);
+}
+
+.contact-card::after {
+  display: none;
+}
+
+.contact-card.cv:hover {
+  background: linear-gradient(180deg, rgba(87, 166, 201, 0.16), rgba(87, 166, 201, 0.06)), var(--panel-2);
+}
+
+.contact-card.cv:hover .arrow {
+  transform: none;
 }
